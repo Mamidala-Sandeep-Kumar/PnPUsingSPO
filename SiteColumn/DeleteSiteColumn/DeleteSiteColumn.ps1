@@ -1,32 +1,27 @@
-﻿<# SCRIPT SUMMARY : THIS SCRIPT HELPS TO CREATE Subsites 
+﻿<# SCRIPT SUMMARY : THIS SCRIPT HELPS TO Delete the site Column. Firat Delete from the List, Content Type then delete the Site Column.
 
 #>
 
 param
 (
-
 [Parameter(Mandatory=$True)] $siteCollectionUrl
 
 )
 
-
-
+#Set current directory path
 $currentPath = Split-Path $MyInvocation.MyCommand.Path
 
 #log file path
 $LogFileName = $currentPath + "\Log.log"
  
+ #connect with SPO using Prompt Credentails
+    Connect-PnPOnline -Url  $siteCollectionUrl –Credentials (Get-Credential) -ErrorAction silentlycontinue
 
-#Connect-PnPOnline -Url $siteCollectionUrl -Credentials $PSCredentials 
-Connect-PnPOnline -Url  $siteCollectionUrl –Credentials (Get-Credential) -ErrorAction silentlycontinue
+    
+  . "$currentPath\Module\DeleteSiteColumnMethod.ps1"
+    $inputFile = $currentPath + '\Input\DeleteSiteColumnDetails.csv'
 
-#Set Path    
-"$currentPath\Module\CreateSubsite.ps1"
-$inputFile = $currentPath + '\Input\SubsiteDetails.csv'
-
-#Invoke Function
-CreateSubsite $inputFile $SiteCollection
-
+    DeleteSiteColumn $inputFile $SiteCollection
 
 # If running in the console, wait for input before closing.
 if ($Host.Name -eq "ConsoleHost")

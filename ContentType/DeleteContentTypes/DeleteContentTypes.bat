@@ -1,6 +1,6 @@
 @ECHO OFF
 SET ThisScriptsDirectory=%~dp0
-SET PowerShellScriptPath=%ThisScriptsDirectory%CreateSubsite.ps1
+SET PowerShellScriptPath=%ThisScriptsDirectory%DeleteContentTypes.ps1
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File ""%PowerShellScriptPath%""' -Verb RunAs}";
 
   
